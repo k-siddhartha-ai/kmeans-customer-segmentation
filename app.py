@@ -1,6 +1,4 @@
-# =========================================================
 # Customer Segmentation using K-Means (Streamlit App)
-# =========================================================
 
 import streamlit as st
 import numpy as np
@@ -11,9 +9,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
 
-# ---------------------------------------------------------
 # Page Configuration
-# ---------------------------------------------------------
 st.set_page_config(
     page_title="Customer Segmentation | K-Means",
     layout="centered"
@@ -22,9 +18,7 @@ st.set_page_config(
 st.title("🛒 Customer Segmentation using K-Means")
 st.write("Unsupervised Learning | Elbow Method | Silhouette Score")
 
-# ---------------------------------------------------------
 # Sidebar Controls
-# ---------------------------------------------------------
 st.sidebar.header("Controls")
 
 num_customers = st.sidebar.slider(
@@ -42,9 +36,7 @@ k_clusters = st.sidebar.slider(
     value=4
 )
 
-# ---------------------------------------------------------
 # Generate Synthetic Customer Data
-# ---------------------------------------------------------
 np.random.seed(42)
 
 ages = np.random.normal(35, 10, num_customers).astype(int)
@@ -60,15 +52,11 @@ df = pd.DataFrame({
 st.subheader("📊 Sample Customer Data")
 st.dataframe(df.head())
 
-# ---------------------------------------------------------
 # Feature Scaling
-# ---------------------------------------------------------
 scaler = StandardScaler()
 scaled_data = scaler.fit_transform(df)
 
-# ---------------------------------------------------------
 # Elbow Method (WCSS)
-# ---------------------------------------------------------
 st.subheader("📉 Elbow Method")
 
 wcss = []
@@ -88,9 +76,7 @@ ax1.grid(True, linestyle="--", alpha=0.6)
 
 st.pyplot(fig1)
 
-# ---------------------------------------------------------
 # K-Means Clustering
-# ---------------------------------------------------------
 model_kmeans = KMeans(
     n_clusters=k_clusters,
     n_init=10,
@@ -100,17 +86,13 @@ model_kmeans = KMeans(
 labels = model_kmeans.fit_predict(scaled_data)
 df["Cluster"] = labels
 
-# ---------------------------------------------------------
 # Silhouette Score
-# ---------------------------------------------------------
 sil_score = silhouette_score(scaled_data, labels)
 
 st.subheader("📐 Silhouette Score")
 st.write(f"**Silhouette Score for K={k_clusters}:** `{sil_score:.4f}`")
 
-# ---------------------------------------------------------
 # Cluster Visualization
-# ---------------------------------------------------------
 st.subheader("🧠 Customer Segments Visualization")
 
 fig2, ax2 = plt.subplots()
@@ -130,8 +112,7 @@ ax2.grid(True, linestyle="--", alpha=0.6)
 
 st.pyplot(fig2)
 
-# ---------------------------------------------------------
 # Footer
-# ---------------------------------------------------------
 st.markdown("---")
 st.markdown("Built with **Streamlit** and **Scikit-learn**")
+
